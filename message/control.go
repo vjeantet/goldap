@@ -11,6 +11,18 @@ import (
 //             criticality             BOOLEAN DEFAULT FALSE,
 //             controlValue            OCTET STRING OPTIONAL }
 
+func NewControl(controlType string, criticality bool, value *string) Control {
+	c := Control{
+		controlType: LDAPOID(controlType),
+		criticality: BOOLEAN(criticality),
+	}
+	if value != nil {
+		v := OCTETSTRING(*value)
+		c.controlValue = &v
+	}
+	return c
+}
+
 func (control *Control) ControlType() LDAPOID {
 	return control.controlType
 }

@@ -124,6 +124,9 @@ func (l *LDAPMessage) SetMessageID(ID int) {
 func (l *LDAPMessage) Controls() *Controls {
 	return l.controls
 }
+func (l *LDAPMessage) SetControls(controls *Controls) {
+	l.controls = controls
+}
 func (l *LDAPMessage) ProtocolOp() ProtocolOp {
 	return l.protocolOp
 }
