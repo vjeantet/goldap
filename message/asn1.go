@@ -223,15 +223,48 @@ func parseInt64(bytes []byte) (ret int64, err error) {
 	return
 }
 
-func sizeInt64(i int64) (size int) {
-	for ; i != 0 || size == 0; i >>= 8 {
-		size++
+// encodeSignedInt64 returns the minimal BER two's-complement encoding of i
+// (big-endian). A positive value whose MSB is 1 gets a leading 0x00 so that
+// the decoder does not interpret it as negative.
+func encodeSignedInt64(i int64) []byte {
+	if i == 0 {
+		return []byte{0}
 	}
-	return
+	// Encode all 8 bytes big-endian, then strip redundant leading bytes.
+	var buf [8]byte
+	for k := 7; k >= 0; k-- {
+		buf[k] = byte(i)
+		i >>= 8
+	}
+	// Strip leading 0x00 (positive) or 0xff (negative) bytes that don't
+	// affect the value, keeping at least one byte.
+	start := 0
+	for start < 7 {
+		// A leading byte is redundant if removing it doesn't change the
+		// sign bit of the next byte.
+		if buf[start] == 0x00 && buf[start+1]&0x80 == 0 {
+			start++
+		} else if buf[start] == 0xff && buf[start+1]&0x80 != 0 {
+			start++
+		} else {
+			break
+		}
+	}
+	return buf[start:]
 }
 
-func writeInt64(bytes *Bytes, i int64) (size int) {
-	for ; i != 0 || size == 0; i >>= 8 { // Write at least one byte even if the value is 0
+func sizeInt64(i int64) int {
+	return len(encodeSignedInt64(i))
+}
+
+func writeInt64(bytes *Bytes, i int64) int {
+	return bytes.writeBytes(encodeSignedInt64(i))
+}
+
+// writeUnsignedInt64 writes an unsigned integer in big-endian (used for BER
+// length fields). It writes backward into the Bytes buffer.
+func writeUnsignedInt64(bytes *Bytes, i int64) (size int) {
+	for ; i != 0 || size == 0; i >>= 8 {
 		bytes.writeBytes([]byte{byte(i)})
 		size++
 	}
@@ -713,7 +746,7 @@ func writeTagAndLength(bytes *Bytes, t TagAndLength) (size int) {
 		panic("Can't have a negative length")
 
 	} else if t.Length >= 128 {
-		lengthBytes := writeInt64(bytes, int64(t.Length))
+		lengthBytes := writeUnsignedInt64(bytes, int64(t.Length))
 		bytes.writeBytes([]byte{byte(0x80 | byte(lengthBytes))})
 		size += lengthBytes + 1
 
