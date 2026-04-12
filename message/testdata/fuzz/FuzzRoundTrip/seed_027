@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("8\x02\x01\x0ad3\x04\x11dc=example,dc=com0\x1e0\x1c\x04\x0bobjectclass1\x0d\x04\x06domain\x04\x03top")

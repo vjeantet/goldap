@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("0*\x02\x01%l%\x04\x18cn=old,dc=example,dc=com\x04\x06cn=new\x01\x01\xff")

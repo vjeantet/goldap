@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("N\x02\x01\x09dI\x04\x09cn=schema0<0:\x04\x0bobjectClass1+\x04\x03top\x04\x09subschema\x04\x08subentry\x04\x0fapacheSubschema")

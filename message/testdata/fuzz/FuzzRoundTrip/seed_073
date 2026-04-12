@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("y\x02\x01\x19ft\x04Jcn=r00X+commonname=The r00X+description=A test user,ou=consumers,ou=system0&0$\x0a\x01\x000\x1f\x04\x0ftelephoneNumber1\x0c\x04\x0a0123456789")

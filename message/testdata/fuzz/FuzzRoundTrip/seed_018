@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("<\x02\x01\x07d7\x04\x09ou=config0*0(\x04\x0bobjectclass1\x19\x04\x03top\x04\x12organizationalUnit")

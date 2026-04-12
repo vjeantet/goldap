@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("1\x02\x01\x05d,\x04\x000(0&\x04\x0bobjectClass1\x17\x04\x03top\x04\x10extensibleObject")
