@@ -16,7 +16,10 @@ func readBindResponse(bytes *Bytes) (bindresponse BindResponse, err error) {
 }
 
 func (response *BindResponse) readComponents(bytes *Bytes) (err error) {
-	response.LDAPResult.readComponents(bytes)
+	err = response.LDAPResult.readComponents(bytes)
+	if err != nil {
+		return
+	}
 	if bytes.HasMoreData() {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
