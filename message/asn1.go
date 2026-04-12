@@ -173,6 +173,7 @@ func parseBool(bytes []byte) (ret bool, err error) {
 		return
 	} else if len(bytes) == 0 {
 		err = SyntaxError{"invalid boolean: no data to read"}
+		return
 	}
 
 	// DER demands that "If the encoding represents the boolean value TRUE,
