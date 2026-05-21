@@ -5,24 +5,23 @@ import (
 	"fmt"
 )
 
-//
-//        SearchRequest ::= [APPLICATION 3] SEQUENCE {
-//             baseObject      LDAPDN,
-//             scope           ENUMERATED {
-//                  baseObject              (0),
-//                  singleLevel             (1),
-//                  wholeSubtree            (2),
-//                  ...  },
-//             derefAliases    ENUMERATED {
-//                  neverDerefAliases       (0),
-//                  derefInSearching        (1),
-//                  derefFindingBaseObj     (2),
-//                  derefAlways             (3) },
-//             sizeLimit       INTEGER (0 ..  maxInt),
-//             timeLimit       INTEGER (0 ..  maxInt),
-//             typesOnly       BOOLEAN,
-//             filter          Filter,
-//             attributes      AttributeSelection }
+//	SearchRequest ::= [APPLICATION 3] SEQUENCE {
+//	     baseObject      LDAPDN,
+//	     scope           ENUMERATED {
+//	          baseObject              (0),
+//	          singleLevel             (1),
+//	          wholeSubtree            (2),
+//	          ...  },
+//	     derefAliases    ENUMERATED {
+//	          neverDerefAliases       (0),
+//	          derefInSearching        (1),
+//	          derefFindingBaseObj     (2),
+//	          derefAlways             (3) },
+//	     sizeLimit       INTEGER (0 ..  maxInt),
+//	     timeLimit       INTEGER (0 ..  maxInt),
+//	     typesOnly       BOOLEAN,
+//	     filter          Filter,
+//	     attributes      AttributeSelection }
 func readSearchRequest(bytes *Bytes) (searchrequest SearchRequest, err error) {
 	err = bytes.ReadSubBytes(classApplication, TagSearchRequest, searchrequest.readComponents)
 	if err != nil {
@@ -31,6 +30,7 @@ func readSearchRequest(bytes *Bytes) (searchrequest SearchRequest, err error) {
 	}
 	return
 }
+
 func (searchrequest *SearchRequest) readComponents(bytes *Bytes) (err error) {
 	searchrequest.baseObject, err = readLDAPDN(bytes)
 	if err != nil {
@@ -75,24 +75,23 @@ func (searchrequest *SearchRequest) readComponents(bytes *Bytes) (err error) {
 	return
 }
 
-//
-//        SearchRequest ::= [APPLICATION 3] SEQUENCE {
-//             baseObject      LDAPDN,
-//             scope           ENUMERATED {
-//                  baseObject              (0),
-//                  singleLevel             (1),
-//                  wholeSubtree            (2),
-//                  ...  },
-//             derefAliases    ENUMERATED {
-//                  neverDerefAliases       (0),
-//                  derefInSearching        (1),
-//                  derefFindingBaseObj     (2),
-//                  derefAlways             (3) },
-//             sizeLimit       INTEGER (0 ..  maxInt),
-//             timeLimit       INTEGER (0 ..  maxInt),
-//             typesOnly       BOOLEAN,
-//             filter          Filter,
-//             attributes      AttributeSelection }
+//	SearchRequest ::= [APPLICATION 3] SEQUENCE {
+//	     baseObject      LDAPDN,
+//	     scope           ENUMERATED {
+//	          baseObject              (0),
+//	          singleLevel             (1),
+//	          wholeSubtree            (2),
+//	          ...  },
+//	     derefAliases    ENUMERATED {
+//	          neverDerefAliases       (0),
+//	          derefInSearching        (1),
+//	          derefFindingBaseObj     (2),
+//	          derefAlways             (3) },
+//	     sizeLimit       INTEGER (0 ..  maxInt),
+//	     timeLimit       INTEGER (0 ..  maxInt),
+//	     typesOnly       BOOLEAN,
+//	     filter          Filter,
+//	     attributes      AttributeSelection }
 func (s SearchRequest) write(bytes *Bytes) (size int) {
 	size += s.attributes.write(bytes)
 	size += s.filter.write(bytes)
@@ -106,24 +105,23 @@ func (s SearchRequest) write(bytes *Bytes) (size int) {
 	return
 }
 
-//
-//        SearchRequest ::= [APPLICATION 3] SEQUENCE {
-//             baseObject      LDAPDN,
-//             scope           ENUMERATED {
-//                  baseObject              (0),
-//                  singleLevel             (1),
-//                  wholeSubtree            (2),
-//                  ...  },
-//             derefAliases    ENUMERATED {
-//                  neverDerefAliases       (0),
-//                  derefInSearching        (1),
-//                  derefFindingBaseObj     (2),
-//                  derefAlways             (3) },
-//             sizeLimit       INTEGER (0 ..  maxInt),
-//             timeLimit       INTEGER (0 ..  maxInt),
-//             typesOnly       BOOLEAN,
-//             filter          Filter,
-//             attributes      AttributeSelection }
+//	SearchRequest ::= [APPLICATION 3] SEQUENCE {
+//	     baseObject      LDAPDN,
+//	     scope           ENUMERATED {
+//	          baseObject              (0),
+//	          singleLevel             (1),
+//	          wholeSubtree            (2),
+//	          ...  },
+//	     derefAliases    ENUMERATED {
+//	          neverDerefAliases       (0),
+//	          derefInSearching        (1),
+//	          derefFindingBaseObj     (2),
+//	          derefAlways             (3) },
+//	     sizeLimit       INTEGER (0 ..  maxInt),
+//	     timeLimit       INTEGER (0 ..  maxInt),
+//	     typesOnly       BOOLEAN,
+//	     filter          Filter,
+//	     attributes      AttributeSelection }
 func (s SearchRequest) size() (size int) {
 	size += s.baseObject.size()
 	size += s.scope.size()
@@ -136,34 +134,44 @@ func (s SearchRequest) size() (size int) {
 	size += sizeTagAndLength(TagSearchRequest, size)
 	return
 }
+
 func (s *SearchRequest) BaseObject() LDAPDN {
 	return s.baseObject
 }
+
 func (s *SearchRequest) Scope() ENUMERATED {
 	return s.scope
 }
+
 func (s *SearchRequest) DerefAliases() ENUMERATED {
 	return s.derefAliases
 }
+
 func (s *SearchRequest) SizeLimit() INTEGER {
 	return s.sizeLimit
 }
+
 func (s *SearchRequest) TimeLimit() INTEGER {
 	return s.timeLimit
 }
+
 func (s *SearchRequest) TypesOnly() BOOLEAN {
 	return s.typesOnly
 }
+
 func (s *SearchRequest) Attributes() AttributeSelection {
 	return s.attributes
 }
+
 func (s *SearchRequest) Filter() Filter {
 	return s.filter
 }
+
 func (s *SearchRequest) FilterString() string {
 	str, _ := s.decompileFilter(s.Filter())
 	return str
 }
+
 func (s *SearchRequest) decompileFilter(packet Filter) (ret string, err error) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -239,8 +247,33 @@ func (s *SearchRequest) decompileFilter(packet Filter) (ret string, err error) {
 		ret += string(f.AttributeDesc())
 		ret += "~="
 		ret += string(f.AssertionValue())
+	case FilterExtensibleMatch:
+		ret += decompileExtensibleMatchFilter(f)
 	}
 
 	ret += ")"
 	return
+}
+
+func decompileExtensibleMatchFilter(filter FilterExtensibleMatch) string {
+	assertion := MatchingRuleAssertion(filter)
+
+	ret := ""
+
+	if assertion.type_ != nil {
+		ret += string(*assertion.type_)
+	}
+
+	if assertion.dnAttributes.Bool() {
+		ret += ":dn"
+	}
+
+	if assertion.matchingRule != nil {
+		ret += ":" + string(*assertion.matchingRule)
+	}
+
+	ret += ":="
+	ret += string(assertion.matchValue)
+
+	return ret
 }
