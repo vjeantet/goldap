@@ -2,6 +2,10 @@ package message
 
 import "fmt"
 
+func (authentication SaslCredentials) Mechanism() LDAPString {
+	return authentication.mechanism
+}
+
 //
 //        SaslCredentials ::= SEQUENCE {
 //             mechanism               LDAPString,

@@ -19,6 +19,10 @@ func (request *BindRequest) AuthenticationSimple() OCTETSTRING {
 	return request.Authentication().(OCTETSTRING)
 }
 
+func (request *BindRequest) AuthenticationSasl() SaslCredentials {
+	return request.Authentication().(SaslCredentials)
+}
+
 func (request *BindRequest) AuthenticationChoice() string {
 	switch request.Authentication().(type) {
 	case OCTETSTRING:
