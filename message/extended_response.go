@@ -22,7 +22,10 @@ func readExtendedResponse(bytes *Bytes) (ret ExtendedResponse, err error) {
 }
 
 func (extended *ExtendedResponse) readComponents(bytes *Bytes) (err error) {
-	extended.LDAPResult.readComponents(bytes)
+	err = extended.LDAPResult.readComponents(bytes)
+	if err != nil {
+		return
+	}
 	if bytes.HasMoreData() {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()

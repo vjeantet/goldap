@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("00\x02\x01-w+\x80\x171.3.6.1.4.1.4203.1.11.1\x81\x10extended-payload")

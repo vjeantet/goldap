@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("0]\x02\x01\x1dsX\x04*ldap://host1.example.com/dc=example,dc=com\x04*ldap://host2.example.com/dc=example,dc=com")

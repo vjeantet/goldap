@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("@\x02\x01'J;cn=A complex person\x5c, very complex !,ou=consumers,ou=system")

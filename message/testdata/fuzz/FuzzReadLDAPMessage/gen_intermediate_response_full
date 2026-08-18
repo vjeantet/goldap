@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("0(\x02\x012y#\x80\x161.3.6.1.4.1.4203.1.9.2\x81\x09sync-data")

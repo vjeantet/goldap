@@ -1,0 +1,2 @@
+go test fuzz v1
+[]byte("E\x02\x01!d@\x04\x1ecn=r00X,ou=consumers,ou=system0\x1e0\x1c\x04\x0bobjectClass1\x0d\x04\x03top\x04\x06person")
